@@ -1,5 +1,6 @@
 package com.example.quiz.screen.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,30 +18,57 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 
+
 @Composable
-fun QuestionButton(texto: String, respostaCorreta : Boolean, mostrarResultado : Boolean) {
-    var cor by remember { mutableStateOf(Color.Transparent) }
+fun QuestionButton(
+    texto: String,
+    respostaCorreta: Boolean,
+    bloqueado: Boolean,
+    onResposta: (Boolean) -> Unit
+) {
+    var corFundo by remember {
+        mutableStateOf(Color.White)
+    }
+
+    var corResultado by remember {
+        mutableStateOf(Color.Gray)
+    }
 
     OutlinedButton(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
             .padding(5.dp),
-        shape = RoundedCornerShape(10.dp),
-        onClick = {
-            cor = if (respostaCorreta) Color.Green else Color.Red
-        } ,
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = if (!mostrarResultado) {
-                Color.Transparent
-            } else if (respostaCorreta) {
-                Color.Green
-            } else {
-                Color.Red
-            }
-                )
 
+        enabled = !bloqueado,
+
+        shape = RoundedCornerShape(10.dp),
+
+        onClick = {
+            if (!bloqueado) {
+                if (respostaCorreta) {
+                    corFundo = Color(0xFFC8E6C9)
+                    corResultado = Color(0xFF1B5E20)
+                } else {
+                    corFundo = Color(0xFFFFCDD2)
+                    corResultado = Color(0xFFB71C1C)
+                }
+                onResposta(respostaCorreta)
+            }
+        },
+
+        border = BorderStroke(2.dp, corResultado),
+
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = corFundo,
+            contentColor = corResultado,
+            disabledContainerColor = corFundo,
+            disabledContentColor = corResultado
+        )
     ) {
-        Text(text = texto)
+        Text(
+            text = texto,
+            color = corResultado
+        )
     }
 }
