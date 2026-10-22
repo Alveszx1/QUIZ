@@ -12,7 +12,8 @@ import com.example.quiz.screen.components.QuestionContent
 @Composable
 fun QuestionScreen(
     navController: NavController,
-    modifier: Modifier
+    modifier: Modifier,
+    nome: String
 ) {
     QuestionContent(
         numeroQuestao = 1,
@@ -28,7 +29,7 @@ fun QuestionScreen(
 
             val acertos = if (acertou) 1 else 0
 
-            navController.navigate("pergunta2/$acertos")
+            navController.navigate("pergunta2/${nome}/${acertos}")
         }
     )
 }

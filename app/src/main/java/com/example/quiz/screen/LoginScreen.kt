@@ -55,7 +55,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController) {
 
             Button(modifier = Modifier.width(220.dp),
                 onClick = {
-                    navController.navigate("question")
+                    navController.navigate("screenName")
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(255, 235, 59, 255)
